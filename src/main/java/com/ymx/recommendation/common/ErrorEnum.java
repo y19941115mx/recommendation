@@ -3,23 +3,23 @@ package com.ymx.recommendation.common;
 
 public enum ErrorEnum {
 
-    SUCCESS(0, "success"),
-    UNKNOWN_ERR(-1, "未知错误"),
-    TEST_ERR(10000, "自定义错误");
+    SUCCESS("0", "success"),
+    UNKNOWN_ERR("-1", "未知错误"),
+    VALID_ERR("10000", "");
 
-    private int code;
+    private String code;
     private String msg;
 
-    ErrorEnum(int code, String msg) {
+    ErrorEnum(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

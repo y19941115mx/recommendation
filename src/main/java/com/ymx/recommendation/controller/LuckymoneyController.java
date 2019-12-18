@@ -2,15 +2,13 @@ package com.ymx.recommendation.controller;
 
 import com.ymx.recommendation.common.CommonException;
 import com.ymx.recommendation.common.CommonRes;
-import com.ymx.recommendation.common.ErrorEnum;
 import com.ymx.recommendation.model.entity.Luckymoney;
 import com.ymx.recommendation.service.LuckymoneyService;
 import com.ymx.recommendation.config.LimitConfig;
 import com.ymx.recommendation.valid.MoneyValid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 
 @RestController
@@ -25,8 +23,8 @@ public class LuckymoneyController {
 
     @GetMapping("/test")
     public String test() throws CommonException {
-//        return String.format("max:%d, min:%d", limitConfig.getMaxMoney(), limitConfig.getMinMoney());
-        throw new CommonException(ErrorEnum.TEST_ERR);
+        return String.format("max:%d, min:%d", limitConfig.getMaxMoney(), limitConfig.getMinMoney());
+//        throw new CommonException(ErrorEnum.TEST_ERR);
     }
 
     @GetMapping("/list")
@@ -44,8 +42,8 @@ public class LuckymoneyController {
         return luckymoneyService.update(id, consumer);
     }
 
-    @PostMapping("")
-    public Luckymoney add(@Valid MoneyValid moneyValid) {
+    @PostMapping(value = "")
+    public Luckymoney add(@Validated @RequestBody MoneyValid moneyValid) {
         return luckymoneyService.add(moneyValid.getProducer(), moneyValid.getMoney());
     }
 }

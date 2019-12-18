@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class CommonException extends Exception {
 
-    private int code;
+    private String code;
 
-    public CommonException(String message, int code) {
+    public CommonException(String message, String code) {
         super(message);
         this.code = code;
     }
