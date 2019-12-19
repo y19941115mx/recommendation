@@ -5,7 +5,8 @@ public enum ErrorEnum {
 
     SUCCESS("0", "success"),
     UNKNOWN_ERR("-1", "未知错误"),
-    VALID_ERR("10000", "");
+    VALID_ERR("10000", ""),
+    NOT_FOUND("40000", "资源不存在");
 
     private String code;
     private String msg;

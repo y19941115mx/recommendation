@@ -1,14 +1,20 @@
 package com.ymx.recommendation.controller;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ymx.recommendation.common.CommonException;
 import com.ymx.recommendation.common.CommonRes;
 import com.ymx.recommendation.model.entity.Luckymoney;
+import com.ymx.recommendation.model.entity.QLuckymoney;
 import com.ymx.recommendation.service.LuckymoneyService;
 import com.ymx.recommendation.config.LimitConfig;
 import com.ymx.recommendation.valid.MoneyValid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 
 @RestController
@@ -19,11 +25,20 @@ public class LuckymoneyController {
     private LuckymoneyService luckymoneyService;
 
     @Autowired
+    JPAQueryFactory queryFactory;
+
+    @Autowired
     private LimitConfig limitConfig;
 
     @GetMapping("/test")
-    public String test() throws CommonException {
-        return String.format("max:%d, min:%d", limitConfig.getMaxMoney(), limitConfig.getMinMoney());
+    public CommonRes test() throws CommonException {
+        QLuckymoney luckymoney = QLuckymoney.luckymoney;
+        BooleanBuilder builder = new BooleanBuilder();
+        //like
+        builder.and(luckymoney.producer.like('%' + "v" + '%'));
+        builder.and(luckymoney.money.between(0, 50));
+        List<Luckymoney> luckymonies = queryFactory.selectFrom(luckymoney).where(builder).fetch();
+        return CommonRes.success(luckymonies);
 //        throw new CommonException(ErrorEnum.TEST_ERR);
     }
 
@@ -38,7 +53,7 @@ public class LuckymoneyController {
     }
 
     @PutMapping("/{id}")
-    public Luckymoney updata(@PathVariable("id") int id, @RequestParam("consumer") String  consumer) {
+    public Luckymoney updata(@PathVariable("id") int id, @RequestParam("consumer") String consumer) {
         return luckymoneyService.update(id, consumer);
     }
 
