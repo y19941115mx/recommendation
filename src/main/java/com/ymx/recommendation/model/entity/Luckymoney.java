@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class Luckymoney {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     private BigDecimal money;
 
