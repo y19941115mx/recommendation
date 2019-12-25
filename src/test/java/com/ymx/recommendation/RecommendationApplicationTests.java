@@ -9,16 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class RecommendationApplicationTests {
 
-    @Autowired
-    UserDao userDao;
-
-    @Test
-    void contextLoads() {
-        User user = new User();
-        user.setPhone("17688888888");
-        user.setNick_name("victor");
-        user.setPassword("123");
-        userDao.save(user);
-    }
+//    @Autowired
+//    UserDao userDao;
+//
+//    @Test
+//    void contextLoads() {
+//
+//    }
 
 }

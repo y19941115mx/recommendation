@@ -1,5 +1,7 @@
 server:
   port: 7777
+  servlet:
+    context-path: /api
 
 spring:
   profiles:
@@ -10,6 +12,10 @@ spring:
     throw-exception-if-no-handler-found: true
 
 
-limit:
-  minMoney: 1
-  maxMoney: 200
+jwt:
+  # 加密yan
+  secret: A0B1C2D3E4F5G6H7I8J9KALBMCNDOEPFQ0R1S2T3U4V5W6X7Y8Z9
+ # tocken 过期时间，单位分钟
+  expire: 15
+ #  token 验证头
+  token-header: accessToken

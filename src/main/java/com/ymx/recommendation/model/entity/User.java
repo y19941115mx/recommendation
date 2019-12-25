@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @DynamicUpdate
 public class User extends Base{
 
-    private String nick_name;
+    private String nickName;
 
     private String phone;
 

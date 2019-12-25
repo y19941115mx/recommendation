@@ -7,11 +7,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-public class MoneyValid implements Serializable {
+public class MoneyValid {
     @Max(value = 200, message = "最大不能超过200哦！")
     @Min(1)
     @NotNull

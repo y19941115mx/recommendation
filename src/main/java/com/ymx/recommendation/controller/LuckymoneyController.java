@@ -2,9 +2,9 @@ package com.ymx.recommendation.controller;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ymx.recommendation.common.BasicAuthedController;
 import com.ymx.recommendation.common.CommonException;
 import com.ymx.recommendation.common.CommonRes;
-import com.ymx.recommendation.config.LimitConfig;
 import com.ymx.recommendation.model.entity.Luckymoney;
 import com.ymx.recommendation.model.entity.QLuckymoney;
 import com.ymx.recommendation.service.LuckymoneyService;
@@ -13,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/luckymoney")
-public class LuckymoneyController {
+public class LuckymoneyController extends BasicAuthedController {
 
     @Autowired
     private LuckymoneyService luckymoneyService;
@@ -27,7 +28,7 @@ public class LuckymoneyController {
     JPAQueryFactory queryFactory;
 
     @Autowired
-    private LimitConfig limitConfig;
+    HttpServletRequest httpServletRequest;
 
     @GetMapping("/test")
     public CommonRes test() throws CommonException {
@@ -37,7 +38,8 @@ public class LuckymoneyController {
         builder.and(luckymoney.producer.like('%' + "v" + '%'));
         builder.and(luckymoney.money.between(0, 50));
         List<Luckymoney> luckymonies = queryFactory.selectFrom(luckymoney).where(builder).fetch();
-        return CommonRes.success(luckymonies);
+        httpServletRequest.getSession().setAttribute("current_user", "123");
+        return CommonRes.success(getCurrentUserId());
 //        throw new CommonException(ErrorEnum.TEST_ERR);
     }
 
